@@ -1,0 +1,23 @@
+{
+  "skill_name": "code",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "add a GET /echo/upper endpoint to golden-rust that returns the value in upper case.",
+      "expected_output": "The spec in golden-spec changes first. Code is regenerated. The only hand written lines are the controller body and its test. The test name is a sentence. No comment appears.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "the greeting controller in golden-rust should also greet in italian. add it.",
+      "expected_output": "The salutation adapter gains the italian entry. The controller is untouched. The test mocks the port and its name is a sentence. Any error is wrapped with the language.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "golden-rust-server sometimes exits with just \"unknown language\" and nothing else. fix it so the whole story is printed.",
+      "expected_output": "main walks the error chain with source and joins it. Nesting with #[source] stays. No dependency is added without asking.",
+      "files": []
+    }
+  ]
+}

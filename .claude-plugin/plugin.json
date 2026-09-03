@@ -1,0 +1,9 @@
+{
+  "name": "forge-skills",
+  "version": "0.1.0",
+  "description": "The forge way of working. One meta router and three task kind skills. Product, code and platform. No hooks.",
+  "author": { "name": "Alexandre Mahdhaoui" },
+  "repository": "https://github.com/alexandremahdhaoui/forge-skills",
+  "license": "Apache-2.0",
+  "keywords": ["forge", "hexagonal", "methodology", "rust", "go"]
+}
