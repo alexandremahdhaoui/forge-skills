@@ -34,6 +34,12 @@ An engine is an MCP server behind a `forge://` URI. forge-dev generates its shel
 
 An engine names no project and no concrete technology it only orchestrates. If a decision cannot be written as a table test, it does not belong in an engine.
 
+## A cell
+
+A cell is one directory with one `forge-dev.yaml` and one generator. The generator writes only inside that directory and never above it. That containment is what keeps cells composable and what the freshness checksum relies on.
+
+A crate hosts several cells as module directories under `src`. The root cell owns `src/lib.rs` and the main layers. A second cell such as `src/grpc/` owns its own `forge-dev.yaml`, its `mod.rs` and the same layer names one level down. `lib.rs` lists cells with a plain `pub mod grpc;` through the root cell's `surface.cells`. Never mount a generated file with `#[path]`. In Go a directory is already a package, so a cell needs no mount at all. A cell that emits a test target and not a module, such as vectors, sits outside `src` and is named as a cargo target.
+
 ## The factory
 
 `forge-factory.yaml` lists every member and every shared version once. It generates `Cargo.toml`, `go.work`, every `go.mod` and every `.envrc`. Edit it only in the factory repo under `workspace/`. A member with no language gets no manifest. A member of the factory that is not in `forge-ci.yaml` builds and resolves locally and is never released from here.
