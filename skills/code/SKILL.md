@@ -33,6 +33,10 @@ main -> driver -> controller -> port <- adapter
 
 Injection is generic and stored in `new`. `Arc<dyn Trait>` only where a framework forces it. A controller never takes an adapter as a method argument. That is what makes drivers hold adapters.
 
+## Cells
+
+A generator owns one directory and never writes above it. A crate hosts several generators as module directories under `src`. The root cell writes `src/lib.rs` and the REST layers. A second cell such as `src/grpc/` owns its own `forge-dev.yaml`, its `mod.rs` and the same layer names one level down. `lib.rs` lists it with a plain `pub mod grpc;` through the root cell's `surface.cells`. Never mount a generated file with `#[path]`. A cell that emits a test target and not a module, such as vectors, sits outside `src` and is named as a cargo target.
+
 An adapter is named by what it talks to. `sqlite`. `postgres`. `ses`. The day an adapter starts deciding, it is a service in disguise. Cut it out into its own spec, core and app. One consumer is enough.
 
 ## Steps
