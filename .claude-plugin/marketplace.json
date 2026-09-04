@@ -1,0 +1,11 @@
+{
+  "name": "forge-skills",
+  "owner": { "name": "Alexandre Mahdhaoui" },
+  "plugins": [
+    {
+      "name": "forge-skills",
+      "source": "./",
+      "description": "The forge way of working. One meta router and three task kind skills. Product, code and platform. No hooks."
+    }
+  ]
+}
