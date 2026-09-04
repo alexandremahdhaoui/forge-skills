@@ -34,6 +34,10 @@ An engine is an MCP server behind a `forge://` URI. forge-dev generates its shel
 
 An engine names no project and no concrete technology it only orchestrates. If a decision cannot be written as a table test, it does not belong in an engine.
 
+## Three transports, one shape
+
+REST reads OpenAPI through hexagonal-rust. gRPC and UDP read the same proto file, its service block being the handler map, through grpc-rust-tonic and udp-rust. Every transport emits the same layers and the same controller trait, so one hand body can answer any of them. A UDP datagram is the udplb frame, one byte schema version from the proto package suffix, one byte FNV-1a hash of package.Service/Method, then prost bytes. Never a generator invented envelope.
+
 ## A cell
 
 A cell is one directory with one `forge-dev.yaml` and one generator. The generator writes only inside that directory and never above it. That containment is what keeps cells composable and what the freshness checksum relies on.
