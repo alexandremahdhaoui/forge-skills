@@ -36,19 +36,19 @@ An engine names no project and no concrete technology it only orchestrates. If a
 
 ## Three transports, one shape
 
-Every transport is a cell. rest-rust reads OpenAPI. grpc-rust-tonic and udp-rust read the same proto file, its service block being the handler map. Every transport emits the same layers, the controller trait, the struct with its ports and `new`, so one impl block can answer any of them. hexagonal-rust is the root cell. It emits the skeleton and main. A UDP datagram is the udplb frame, one byte schema version from the proto package suffix, one byte FNV-1a hash of package.Service/Method, then prost bytes. Never a generator invented envelope.
+Every transport is a cell. rest-rust reads OpenAPI. grpc-rust-tonic and udp-rust read the same proto file, its service block being the handler map. Every transport emits the same layers, the controller trait, the struct with its ports and `new`, so one impl block can answer any of them. hexagonal-rust is the root cell. It emits `lib.rs`, the root layer mod files, the config schema, the build script and main. A UDP datagram is the udplb frame, one byte schema version from the proto package suffix, one byte FNV-1a hash of package.Service/Method, then prost bytes. Never a generator invented envelope.
 
 ## A cell
 
-A cell is one directory with one `forge-dev.yaml` and one generator. The generator writes only inside that directory and never above it. That containment is what keeps cells composable and what the freshness checksum relies on.
+A cell is one directory with one `forge-dev.yaml` and one generator. The generator writes only inside that directory and never above it. That containment keeps cells composable and the checksum true.
 
-A crate hosts many cells as module directories under `src`. The root cell owns `src/lib.rs`, the root layer mod files, the config loader and main. A transport cell such as `src/grpc/` owns its own `forge-dev.yaml`, its `mod.rs` and the same layer names one level down. `lib.rs` lists cells with a plain `pub mod grpc;` from the root cell's `layout.cells`. Never mount a generated file with `#[path]`. A cell that emits a test target and not a module, such as vectors, sits outside `src` and is named as a cargo target. Every transport engine writes `zz_generated_cell.yaml` in its cell. It lists the drivers, adapters, controllers and ports the cell provides with their config fields. hexagonal-rust reads the manifests of the listed cells and `wiring.yaml`, named by `wiring.specPath` beside `openapi` and `proto`. It refuses a port with no adapter, a driver with no controller, a listed cell with no manifest, a duplicate driver and a choice naming nothing. It writes every choice and field into the `Spec` schema. `configGenerator` names the engine and its `outputDir`. configgen-gen emits the loader there. After every generator answers, forge-dev refuses a path not named `zz_generated`, sweeps files the previous run wrote and this run did not, and demands the manifest when the engine emits one. A layer or cell `mod.rs` passes on its generated header.
+The root cell owns `src/lib.rs`, the root layer mod files, the config schema, the crate build script and main. A transport cell such as `src/grpc/` owns its `forge-dev.yaml`, its `mod.rs` and the same layers one level down. `lib.rs` lists cells with a plain `pub mod grpc;` from the root cell's `layout.cells`. Never mount a generated file with `#[path]`. A cell that emits a test target and not a module, such as vectors, sits outside `src` as a cargo target. Every transport engine writes `zz_generated_cell.yaml` in its cell. It lists the drivers, adapters, controllers and ports the cell provides with their config fields and its build script. hexagonal-rust reads the manifests of the listed cells and `wiring.yaml`, named by `wiring.specPath` beside `openapi` and `proto`. It refuses a port with no adapter, a driver with no controller, a listed cell with no manifest, a duplicate driver and a choice naming nothing. It writes every choice and field into the `Spec` schema. `configGenerator` names the engine and its `outputDir`. configgen-gen emits the loader there. After every generator answers, forge-dev refuses a path not named `zz_generated`, sweeps files the previous run wrote and this run did not, and demands the manifest when the engine emits one. Only `lib.rs` and `mod.rs` skip that name. They carry the generated header instead.
 
 ## The factory
 
 `forge-factory.yaml` lists every member and every shared version once. It generates `Cargo.toml`, `go.work`, every `go.mod` and every `.envrc`. Edit it only in the factory repo under `workspace/`. A member with no language gets no manifest. A member of the factory that is not in `forge-ci.yaml` builds and resolves locally and is never released from here.
 
-`FOLLOWUP.md` and `CLAUDE.md` live in the factory and are placed by `forge clone`.
+`forge clone` places `FOLLOWUP.md` and `CLAUDE.md` from the factory.
 
 ## CI and release
 
@@ -67,7 +67,7 @@ Source first. Docs are stale. Fetch and read at `origin/main`.
 - The pipeline: `github.com/alexandremahdhaoui/forge-ci`, `pkg/config` for the yaml types, `internal/controller/reconcilecontroller` for the loop.
 - The factory: `github.com/alexandremahdhaoui/forge-factory`, `internal/controller/synccontroller` and `rendercontroller`.
 - The register: `github.com/alexandremahdhaoui/forge-register`, `internal/types/regtypes`.
-- A working factory to copy: `~/workspaces/golden/golden-factory` and its `workspace/` dir. A one day old bootstrap to copy: `~/workspaces/qod/qod-factory`.
+- A working factory to copy: `~/workspaces/golden/golden-factory` and its `workspace/` dir. A bootstrap to copy: `~/workspaces/qod/qod-factory`.
 
 ## Commits
 
