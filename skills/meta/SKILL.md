@@ -13,8 +13,12 @@ Every task is one of three kinds. Pick the kind. Load that skill. Nothing else.
 | product | what a user of this workspace's product can do. a slice of their journey | `<project>-product`. the factory names it |
 | code | a spec, a layer, a test, a gate inside a repo | code |
 | platform | a repo, an engine, the factory, the register, a release | platform |
+| review | verifying a batch another agent built | review |
+| provenance | verifying who decided, after a review passed | provenance |
 
 A task that spans two kinds is two tasks. Product first. It ends at the spec. Code picks up from the spec.
+
+When two rows match, the narrower one wins. Code beats platform for a change inside a repo, whatever the repo is for. Review and provenance beat both, because verifying is never building.
 
 The product skill is the only one that knows the product. Every workspace brings its own. The factory `CLAUDE.md` names it.
 
