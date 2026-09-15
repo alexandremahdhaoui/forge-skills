@@ -1,14 +1,14 @@
 ---
 name: review
 description: This skill should be used when reviewing a batch another agent built. Load it before reading any diff. Use it for every review, even a one file change, even when the builder reports every gate green.
-version: 0.1.0
+version: 0.2.0
 ---
 
 # Review
 
 Verify claims by running them. A builder's report is a claim, not evidence.
 
-First load the installed `code-review` skill and follow it for the diff itself. This skill adds what that one cannot know, the rules of this workspace.
+Read the diff yourself, every hunk, in the repo the batch touched. Do not load the installed `code-review` skill. It forks a review over the whole workspace and has returned findings about unrelated repositories five times and failed to return twice. A finding about a file outside the batch's repo is discarded.
 
 ## Run it yourself
 
