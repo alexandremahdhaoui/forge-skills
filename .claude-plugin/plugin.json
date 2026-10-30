@@ -1,7 +1,8 @@
 {
   "name": "forge-skills",
-  "version": "0.1.0",
-  "description": "The forge way of working. One meta router and three task kind skills. Product, code and platform. No hooks.",
+  "version": "0.2.0",
+  "description": "The forge way of working. One meta router and the task kind skills: product, code, platform, review and provenance. In a forge workspace three hooks make every session and every subagent load the meta skill first, and refuse a subagent brief that does not name it or does not run on model opus.",
+  "hooks": "./hooks/hooks.json",
   "author": { "name": "Alexandre Mahdhaoui" },
   "repository": "https://github.com/alexandremahdhaoui/forge-skills",
   "license": "Apache-2.0",

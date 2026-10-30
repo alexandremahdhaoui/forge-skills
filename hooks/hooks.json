@@ -1,0 +1,42 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PLUGIN_ROOT}/hooks/forge-workspace.sh\" session",
+            "timeout": 5,
+            "statusMessage": "Checking for a forge workspace..."
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PLUGIN_ROOT}/hooks/forge-workspace.sh\" subagent",
+            "timeout": 5,
+            "statusMessage": "Handing the forge skills to the subagent..."
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PLUGIN_ROOT}/hooks/agent-brief.sh\"",
+            "timeout": 5,
+            "statusMessage": "Checking the subagent brief..."
+          }
+        ]
+      }
+    ]
+  }
+}
